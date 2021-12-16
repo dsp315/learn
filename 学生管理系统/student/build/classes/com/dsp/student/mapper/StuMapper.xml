@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dsp.student.mapper.StuMapper">
+	<resultMap type="StuVO" id="stuMap">
+		<id property="stuNo" column="stu_no"/>
+		<result property="stuName" column="stu_name"/>
+		<result property="stuAge" column="stu_age"/>
+		<result property="stuGender" column="stu_gender"/>
+		<result property="stuCollege" column="stu_college"/>
+		<result property="stuHometown" column="stu_hometown"/>
+		<result property="stuTel" column="stu_tel"/>
+	</resultMap>
+	
+	<sql id="stuCols">
+		stu_no, stu_name, stu_age, stu_gender, stu_college, stu_hometown, stu_tel
+	</sql>
+	
+	<!-- 查询所有信息 -->
+	<select id="getStus" parameterType="map" resultMap="stuMap">
+		SELECT 
+			<include refid="stuCols"/> 
+		FROM student 
+	</select>
+	
+	<!-- 根据学号查询信息 -->
+	<select id="getStuByNo" parameterType="String" resultMap="stuMap">
+		SELECT <include refid="stuCols"/> 
+		FROM student
+		WHERE stu_no = #{stuNo}
+	</select>
+	
+	<!-- 无参查询 -->
+	<select id="getStuBy" parameterType="map" resultMap="stuMap">
+		SELECT 
+			<include refid="stuCols"/> 
+		FROM student
+		<where>
+			<if test="stuNo != null">stu_no like #{stuNo}</if>
+			<if test="stuName != null">stu_no like #{stuName}</if>
+		</where>
+	</select>
+	
+	<!-- 最大学号+1 -->
+	<select id="MaxStuNo" resultType="string">
+		SELECT Max(stu_no)
+		FROM student
+	</select>	
+	
+	<!-- 添加学生信息 -->
+	<insert id="addStu" parameterType="map">
+		INSERT INTO student
+		VALUES(#{stuNo}, #{stuName}, #{stuAge},
+				#{stuGender}, #{stuCollege},
+				#{stuHometown}, #{stuTel})
+	</insert>
+	
+	<!-- 删除学生信息 -->
+	<delete id="delStu" parameterType="String">
+		DELETE 
+		FROM student 
+		WHERE stu_no = #{stuNo}
+	</delete>
+	
+	<!-- 修改学生信息 -->
+	<update id="modStu">
+		UPDATE student
+		SET
+			stu_name = #{stuName},
+			stu_age = #{stuAge},
+			stu_gender = #{stuGender},
+			stu_college = #{stuCollege},
+			stu_hometown = #{stuHometown},
+			stu_tel = #{stuTel}
+			WHERE stu_no = #{stuNo} ;
+	</update>
+</mapper>

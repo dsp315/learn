@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dsp.student.mapper.AdminMapper">
+	<resultMap type="AdminVO" id="admMap">
+		<id property="admNo" column="adm_no"/>
+		<result property="admName" column="adm_name"/>
+		<result property="admPwd " column="adm_pwd"/>
+	</resultMap>
+	
+	<!-- 登录 -->
+	<select id="login" parameterType="map" resultMap="admMap">
+		SELECT adm_no, adm_name
+		FROM admin
+		WHERE adm_no=#{admId} AND adm_pwd=#{admPwd} 
+	</select>
+	
+	<!-- 修改信息 -->
+	<update id="modAdmInfo" parameterType="map" >
+		UPDATE admin SET adm_name = #{admName} WHERE adm_no = #{admNo}
+	</update>
+	
+	<!-- 修改密码 -->
+	<update id="modAdmPwd" parameterType="map" >
+		UPDATE admin SET adm_pwd = #{admPwd} WHERE adm_no = #{admNo}
+	</update>
+	
+</mapper>

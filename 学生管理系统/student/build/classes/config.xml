@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 类型别名配置 -->
+	<typeAliases>
+		<typeAlias type="com.dsp.student.model.AdminVO" alias="AdminVO"/>
+		<typeAlias type="com.dsp.student.model.StuVO" alias="StuVO"/>
+	</typeAliases>
+	
+	<environments default="dev">
+		<environment id="dev">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://localhost:3306/student?useUnicode=true&amp;setcharacterEncoding=utf-8"/>
+				<property name="username" value="root"/>
+				<property name="password" value="123456"/>
+				<property name="poolMaximumActiveConnections" value="30"/>
+				<property name="poolMaximumIdleConnections" value="5"/>
+				<property name="poolMaximumCheckoutTime" value="5000"/>
+			</dataSource>			
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/dsp/student/mapper/AdminMapper.xml"/>
+		<mapper resource="com/dsp/student/mapper/StuMapper.xml"/>
+	</mappers>
+	
+</configuration>
